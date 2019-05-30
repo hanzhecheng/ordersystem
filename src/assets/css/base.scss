@@ -1,0 +1,33 @@
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+img {
+    vertical-align: middle;
+    border: none;
+}
+
+ul,
+ol,
+li {
+    list-style: none;
+}
+
+i,
+em {
+    font-style: normal;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both
+}
