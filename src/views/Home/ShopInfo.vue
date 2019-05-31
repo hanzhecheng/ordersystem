@@ -20,17 +20,19 @@
         <span class='shopinfo-right-label'>平均送达时间</span>
         <span class='shopinfo-right-label--big'>{{shopInfo.average}}分钟</span>
       </div>
-      <div class='shopinfo-right-love'>
-        <span class='shopinfo-right-love-icon'></span>
-        <span class='shopinfo-right-love-label'></span>
-      </div>
+    </div>
+    <div class='shopinfo-right-love' @click='toggleLove'>
+      <LoveIcon :full='shopInfo.love'></LoveIcon>
+      <span class='shopinfo-right-love-label'>{{shopInfo.love?'取消收藏':'收藏'}}</span>
     </div>
   </div>
 </template>
 
 <script>
+const LoveIcon = () => import("@/components/LoveIcon");
 export default {
   name: "ShopInfo",
+  components: { LoveIcon },
   data() {
     return {
       shopInfo: {
@@ -40,9 +42,15 @@ export default {
         stars: 4.5,
         startPrice: 45,
         distributionPrice: 3,
-        average: 30
+        average: 30,
+        love: 0
       }
     };
+  },
+  methods: {
+    toggleLove() {
+      this.shopInfo.love = !this.shopInfo.love;
+    }
   }
 };
 </script>
@@ -116,36 +124,19 @@ export default {
   background-color: rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: column;
-  @include center;
+  align-items: center;
+  justify-content: center;
 }
 .shopinfo-right-label--big {
   font-size: 18px;
   color: white;
   font-weight: 700;
 }
-.shopinfo-right-love-icon {
-  display: block;
-  position: relative;
-  width: 40px;
-  height: 30px;
-  &::before,
-  &::after {
-    position: absolute;
-    content: "";
-    left: 10px;
-    top: 0;
-    width: 50px;
-    height: 80px;
-    background: white;
-    border-radius: 50px 50px 0 0;
-    transform: rotate(-45deg) scale(.5);
-    transform-origin: 0 100%;
-  }
-  &::after {
-    left: -40px;
-    transform: rotate(45deg) scale(.5);;
-    transform-origin: 100% 100%;
-  }
+.shopinfo-right-love-label {
+  color: white;
+  font-size: 13px;
+  display: inline-block;
+  margin-top: -10px;
 }
 </style>
 
