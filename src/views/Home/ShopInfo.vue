@@ -4,7 +4,9 @@
       <img class='shopinfo-avatar' :src='shopInfo.image'>
       <div class='shopinfo-main'>
         <div class='shopinfo-name one-line-dot'>{{shopInfo.name}}</div>
-        <div class='shooinfo-star'>5星</div>
+        <div class='shooinfo-star'>
+          <Stars :number='5'></Stars>
+        </div>
       </div>
     </div>
     <div class='shopinfo-right'>
@@ -30,9 +32,10 @@
 
 <script>
 const LoveIcon = () => import("@/components/LoveIcon");
+const Stars = () => import("@/components/Stars");
 export default {
   name: "ShopInfo",
-  components: { LoveIcon },
+  components: { LoveIcon, Stars },
   data() {
     return {
       shopInfo: {
@@ -91,8 +94,8 @@ export default {
 }
 .shooinfo-star {
   width: 100%;
+  height: 30px;
   text-align: left;
-  color: rgb(230, 193, 28);
 }
 .shopinfo-right {
   display: flex;
@@ -111,7 +114,7 @@ export default {
   color: white;
   font-weight: 400;
   margin-bottom: 15px;
-  max-width: 100px;;
+  max-width: 100px;
 }
 .shopinfo-right-love {
   position: absolute;

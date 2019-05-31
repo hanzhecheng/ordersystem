@@ -5,7 +5,9 @@
       <ShopInfo></ShopInfo>
       <Operator></Operator>
     </div>
-    
+    <div class='home-body'>
+      <Body></Body>
+    </div>
   </div>
 </template>
 
@@ -13,12 +15,14 @@
 const Header = () => import("./Header");
 const ShopInfo = () => import("./ShopInfo");
 const Operator = () => import("./Operator");
+const Body = () => import("./Body");
 export default {
   name: "Home",
   components: {
     Header,
     ShopInfo,
-    Operator
+    Operator,
+    Body
   }
 };
 </script>
