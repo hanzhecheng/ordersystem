@@ -3,7 +3,7 @@
     <div class='shopinfo-left'>
       <img class='shopinfo-avatar' :src='shopInfo.image'>
       <div class='shopinfo-main'>
-        <div class='shopinfo-name'>{{shopInfo.name}}</div>
+        <div class='shopinfo-name one-line-dot'>{{shopInfo.name}}</div>
         <div class='shooinfo-star'>5星</div>
       </div>
     </div>
@@ -17,13 +17,13 @@
         <span class='shopinfo-right-label--big'>&yen;{{shopInfo.distributionPrice}}</span>
       </div>
       <div class='shopinfo-right-item'>
-        <span class='shopinfo-right-label'>平均送达时间</span>
+        <span class='shopinfo-right-label one-line-dot'>平均送达时间</span>
         <span class='shopinfo-right-label--big'>{{shopInfo.average}}分钟</span>
       </div>
-    </div>
-    <div class='shopinfo-right-love' @click='toggleLove'>
-      <LoveIcon :full='shopInfo.love'></LoveIcon>
-      <span class='shopinfo-right-love-label'>{{shopInfo.love?'取消收藏':'收藏'}}</span>
+      <div class='shopinfo-right-love' @click='toggleLove'>
+        <LoveIcon :full='shopInfo.love'></LoveIcon>
+        <span class='shopinfo-right-love-label'>{{shopInfo.love?'取消收藏':'收藏'}}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -87,6 +87,7 @@ export default {
   font-weight: 600;
   color: white;
   margin-bottom: 5px;
+  max-width: 150px;
 }
 .shooinfo-star {
   width: 100%;
@@ -102,25 +103,22 @@ export default {
   display: flex;
   flex-direction: column;
   @include center;
-  width: 150px;
+  width: 10vw;
 }
-.shopinfo-right-label {
-  font-size: 14px;
-  color: white;
-  font-weight: 400;
-}
+
 .shopinfo-right-label {
   font-size: 14px;
   color: white;
   font-weight: 400;
   margin-bottom: 15px;
+  max-width: 100px;;
 }
 .shopinfo-right-love {
   position: absolute;
   width: 80px;
   height: 80px;
   top: 0;
-  right: 100px;
+  right: 0;
   background-color: rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: column;

@@ -16,7 +16,7 @@ export default {
   name: "LoveIcon",
   props: {
     full: {
-      type: Boolean,
+      type: [Boolean,Number],
       default: false
     }
   }
