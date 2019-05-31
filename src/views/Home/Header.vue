@@ -10,7 +10,7 @@
       </div>
       <div class='header-right'>
         <span class='header-right-item'>{{links.right.uname}}</span>
-        <span class='header-right-arrow--down' @mouseenter='showOpera' @mouseleave='hideOpera'></span>
+        <span class='header-right-arrow--down' @mouseenter='showOpera'></span>
         <ul class='header-right-operator' v-if='showOperator'>
           <li>个人中心</li>
           <li>我的地址</li>
@@ -61,6 +61,15 @@ export default {
     hideOpera() {
       this.showOperator = false;
     }
+  },
+  watch: {
+    showOperator(val) {
+      if (val) {
+        document.body.addEventListener("click", this.hideOpera);
+      } else {
+        document.body.removeEventListener("click", this.hideOpera);
+      }
+    }
   }
 };
 </script>
@@ -83,6 +92,7 @@ export default {
   flex-direction: row;
 }
 .header-left-item {
+  cursor: pointer;
   display: flex;
   @include center;
   font-size: 16px;
@@ -115,10 +125,12 @@ export default {
   width: 120px;
   top: 25px;
   right: -20px;
+  z-index: 2;
   background: white;
   box-sizing: border-box;
   padding: 5px;
   & li {
+    cursor: pointer;
     text-align: center;
     padding: 5px;
     font-size: 14px;
