@@ -1,20 +1,22 @@
 <template>
   <div class='body'>
     <div class='body-goodslist'>
-      <Goods v-for='item in goodsList' :key='item.id' :info='item'></Goods>
+      <Goods v-for='item in goodsList' :info='item' :key='item.id'></Goods>
     </div>
-    <div class='body-notice'></div>
+    <div class='body-notice'>
+      <Notice></Notice>
+    </div>
   </div>
 </template>
 
 <script>
 const Goods = () => import("@/components/Goods");
+const Notice = () => import("@/components/Notice");
 export default {
   name: "Body",
-  data() {
-    return {
-      goodsList: []
-    };
+  components: {
+    Goods,
+    Notice
   },
   mounted() {
     Array(5)
@@ -22,6 +24,8 @@ export default {
       .forEach((item, index) => {
         this.goodsList.push({
           id: index + 1,
+          title: "热销" + index,
+          subtitle: "大家喜欢才是真的好",
           name: "招牌冻丝袜奶茶" + index,
           desc: "让你一秒感受冰爽提神！主要原料：奶茶",
           score: "5" - index,
@@ -32,8 +36,10 @@ export default {
         });
       });
   },
-  components: {
-    Goods
+  data() {
+    return {
+      goodsList: []
+    };
   }
 };
 </script>

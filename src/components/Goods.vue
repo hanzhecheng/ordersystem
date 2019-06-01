@@ -10,15 +10,25 @@
         <Stars :number='info.score'></Stars>
       </div>
       <div class='goods-right-price'>&yen;{{info.price}}</div>
+      <div class='goods-right-cart'>
+        <button class='goods-addcart' type='button' v-if='!isAdd' @click='add'>加入购物车</button>
+        <Quantity v-else></Quantity>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 const Stars = () => import("@/components/Stars");
+const Quantity = () => import("@/components/Quantity");
 export default {
   name: "Goods",
-  components: { Stars },
+  components: { Stars, Quantity },
+  data() {
+    return {
+      isAdd: false
+    };
+  },
   props: {
     info: {
       type: Object,
@@ -26,17 +36,25 @@ export default {
         return {};
       }
     }
+  },
+  methods: {
+    add() {
+      this.isAdd = true;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .goods {
+  position: relative;
   display: flex;
-  width: 48%;
+  width: 45%;
   box-sizing: border-box;
-  padding: 10px;
+  margin: 10px;
   height: 100px;
+  border: 1px solid #eee;
+  background-color: white;
 }
 .goods-margin0 {
   margin: 0;
@@ -69,6 +87,24 @@ export default {
 .goods-right-price {
   color: #f74342;
   font-size: 14px;
+}
+.goods-right-cart {
+  position: absolute;
+  right: 15px;
+  bottom: 10px;
+}
+.goods-addcart {
+  background-color: #0089dc;
+  color: white;
+  border: 0;
+  cursor: pointer;
+  width: 90px;
+  height: 26px;
+  line-height: 26px;
+  border-radius: 20px;
+  text-align: center;
+  outline: 0;
+  font-size: 12px;
 }
 </style>
 
