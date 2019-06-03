@@ -11,8 +11,8 @@
       </div>
       <div class='goods-right-price'>&yen;{{info.price}}</div>
       <div class='goods-right-cart'>
-        <button class='goods-addcart' type='button' v-if='!isAdd' @click='add'>加入购物车</button>
-        <Quantity v-else></Quantity>
+        <button class='goods-addcart' type='button' v-if='info.count==0' @click='add'>加入购物车</button>
+        <Quantity :goods='info' v-else></Quantity>
       </div>
     </div>
   </div>
@@ -24,11 +24,6 @@ const Quantity = () => import("@/components/Quantity");
 export default {
   name: "Goods",
   components: { Stars, Quantity },
-  data() {
-    return {
-      isAdd: false
-    };
-  },
   props: {
     info: {
       type: Object,
@@ -39,7 +34,9 @@ export default {
   },
   methods: {
     add() {
-      this.isAdd = true;
+      this.info.count += 1;
+      this.$store.dispatch("updateGoodsCount", this.info);
+      this.$store.dispatch("updateCartCount", this.info);
     }
   }
 };

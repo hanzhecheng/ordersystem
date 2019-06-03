@@ -10,9 +10,9 @@
       </div>
     </div>
     <div class='cart-body'>
-      <div class='cart-body-item' v-for='(item,index) in list' :key='index'>
+      <div class='cart-body-item' v-for='(item,index) in goods' :key='index'>
         <div class='cart-body-item-name one-line-dot'>{{item.name}}</div>
-        <Quantity></Quantity>
+        <Quantity :goods="item"></Quantity>
         <div class='cart-body-item-price'>&yen;{{item.price}}</div>
       </div>
     </div>
@@ -22,7 +22,7 @@
         <label>&yen;{{totalAmoount}}</label>
         <label>配送费:&yen;3</label>
       </div>
-      <div v-if='list.length>0' class='cart-foot-right cart-foot-right-full'>去结算 ></div>
+      <div v-if='goods.length>0' class='cart-foot-right cart-foot-right-full'>去结算 ></div>
       <div v-else class='cart-foot-right cart-foot-right-empty'>购物车是空的</div>
     </div>
   </div>
@@ -35,27 +35,6 @@ export default {
   components: {
     Quantity
   },
-  data() {
-    return {
-      list: [
-        {
-          name: "上看到了附近",
-          count: 2,
-          price: 12
-        },
-        {
-          name: "sldkfalkfa",
-          count: 2,
-          price: 26
-        },
-        {
-          name: "法律的弗拉",
-          count: 2,
-          price: 15
-        }
-      ]
-    };
-  },
   props: {
     goods: {
       type: Array,
@@ -66,12 +45,12 @@ export default {
   },
   methods: {
     clearCart() {
-      this.list = [];
+      this.$store.dispatch("clearCartCount");
     }
   },
   computed: {
     totalAmoount() {
-      return this.list.reduce((origin, item) => {
+      return this.goods.reduce((origin, item) => {
         origin += item.count * item.price;
         return origin;
       }, 0);

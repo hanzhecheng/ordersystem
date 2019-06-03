@@ -14,6 +14,17 @@ export default {
       num: 1
     };
   },
+  props: {
+    goods: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    }
+  },
+  mounted() {
+    this.num = this.goods.count;
+  },
   methods: {
     checkValid(event) {
       let numReg = /[0-9]/;
@@ -25,12 +36,15 @@ export default {
       } else {
         this.num = parseInt(this.num);
       }
+      this.updateCount();
     },
     minus() {
       if (this.num > 1) {
         this.num -= 1;
       } else {
+        this.num = 0;
       }
+      this.updateCount();
     },
     plus() {
       if (this.num === "") {
@@ -39,8 +53,14 @@ export default {
         this.num = parseInt(this.num);
         this.num += 1;
       }
+      this.updateCount();
+    },
+    updateCount() {
+      this.goods.count = this.num;
+      this.$store.dispatch("updateGoodsCount", this.goods);
+      this.$store.dispatch("updateCartCount", this.goods);
     }
-  }
+  },
 };
 </script>
 

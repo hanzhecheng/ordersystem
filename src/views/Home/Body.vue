@@ -7,7 +7,7 @@
       <Notice></Notice>
     </div>
     <div class='body-cart'>
-      <Cart></Cart>
+      <Cart :goods='cartList'></Cart>
     </div>
   </div>
 </template>
@@ -24,10 +24,11 @@ export default {
     Cart
   },
   mounted() {
+    let arr = [];
     Array(5)
       .fill(1)
       .forEach((item, index) => {
-        this.goodsList.push({
+        arr.push({
           id: index + 1,
           title: "热销" + index,
           subtitle: "大家喜欢才是真的好",
@@ -36,15 +37,20 @@ export default {
           score: "5" - index,
           price: "14" - index,
           salesNo: "63" - index,
+          count: 0,
           image:
             "https://fuss10.elemecdn.com/6/b0/96c04468114ada7c485b87893de27jpeg.jpeg?imageMogr2/thumbnail/200x200/format/webp/quality/85"
         });
       });
+    this.$store.dispatch("initGoodsList", arr);
   },
-  data() {
-    return {
-      goodsList: []
-    };
+  computed: {
+    goodsList() {
+      return this.$store.getters.goodsList;
+    },
+    cartList() {
+      return this.$store.getters.cartList;
+    }
   }
 };
 </script>
@@ -68,7 +74,7 @@ export default {
   margin: 10px;
   border: 1px solid #eee;
 }
-.body-cart{
+.body-cart {
   position: fixed;
   right: 0;
   bottom: 0;
