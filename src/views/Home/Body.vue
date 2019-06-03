@@ -6,17 +6,22 @@
     <div class='body-notice'>
       <Notice></Notice>
     </div>
+    <div class='body-cart'>
+      <Cart></Cart>
+    </div>
   </div>
 </template>
 
 <script>
 const Goods = () => import("@/components/Goods");
 const Notice = () => import("@/components/Notice");
+const Cart = () => import("@/components/Cart");
 export default {
   name: "Body",
   components: {
     Goods,
-    Notice
+    Notice,
+    Cart
   },
   mounted() {
     Array(5)
@@ -47,7 +52,7 @@ export default {
 <style lang="scss" scoped>
 .body {
   display: flex;
-  padding: 0 10vw;
+  padding: 0 15vw;
 }
 .body-goodslist {
   display: flex;
@@ -62,6 +67,11 @@ export default {
   box-sizing: border-box;
   margin: 10px;
   border: 1px solid #eee;
+}
+.body-cart{
+  position: fixed;
+  right: 0;
+  bottom: 0;
 }
 </style>
 
