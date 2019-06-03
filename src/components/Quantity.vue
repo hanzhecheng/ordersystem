@@ -30,11 +30,15 @@ export default {
       if (this.num > 1) {
         this.num -= 1;
       } else {
-          
       }
     },
     plus() {
-      this.num += 1;
+      if (this.num === "") {
+        this.num = 1;
+      } else {
+        this.num = parseInt(this.num);
+        this.num += 1;
+      }
     }
   }
 };
