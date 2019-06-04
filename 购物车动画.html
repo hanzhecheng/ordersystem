@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <meta
+        http-equiv="X-UA-Compatible"
+        content="ie=edge"
+    >
+    <title>Document</title>
+    <style>
+        .circle {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            border: 1px solid #eee;
+            margin: 100px auto;
+        }
+
+        .add {
+            position: absolute;
+            z-index: 3;
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+            cursor: pointer;
+        }
+
+        .itemx {
+            position: absolute;
+            z-index: 2;
+            transition: all 1s cubic-bezier(0.39, -0.4, 0.83, 0.23) 0s;
+        }
+
+        .item-none {
+            display: none;
+        }
+
+        .item {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: red;
+            transition: all 1s ease 0s;
+        }
+
+        .footer {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 30px;
+            height: 30px;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="circle">
+        <div
+            class="add"
+            onclick="move(event)"
+        >+</div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="itemx item-none">
+            <div class="item"></div>
+        </div>
+        <div class="footer"></div>
+    </div>
+    <script>
+        function move(event) {
+            let itemx = document.querySelectorAll(".itemx.item-none")[0];
+            let item = itemx.firstElementChild;
+            itemx.classList.remove("item-none")
+            setTimeout(function () {
+                item.style.transform = "translate3d(270px,0,0)";
+                itemx.style.transform = "translate3d(0,270px,0)";
+                setTimeout(function () {
+                    itemx.classList.add("item-none")
+                    itemx.removeAttribute("style")
+                    item.removeAttribute("style")
+
+                }, 1000)
+            }, 0)
+        }
+    </script>
+</body>
+
+</html>
