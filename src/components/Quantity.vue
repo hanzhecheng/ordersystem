@@ -11,19 +11,23 @@
       type='button'
       class='quantity-btn-plus'
       :class='{"quantity-btn-cart":cart}'
-      @click='plus'
+      @click='plus($event)'
     >+</button>
+    <GoodsDot :client="client" ref="goodsdot"></GoodsDot>
   </div>
 </template>
 
 <script>
+const GoodsDot = () => import("@/components/GoodsDot");
 export default {
   name: "Quantity",
   data() {
     return {
-      num: 1
+      num: 1,
+      client: { x: "", y: "" }
     };
   },
+  components: { GoodsDot },
   props: {
     goods: {
       type: Object,
@@ -60,7 +64,7 @@ export default {
       }
       this.updateCount();
     },
-    plus() {
+    plus(event) {
       if (this.num === "") {
         this.num = 1;
       } else {
@@ -68,6 +72,13 @@ export default {
         this.num += 1;
       }
       this.updateCount();
+      if (!this.cart) {
+        this.client = {
+          x: event.clientX,
+          y: event.clientY
+        };
+        this.$refs.goodsdot.startAnimation()
+      }
     },
     updateCount() {
       this.goods.count = this.num;
