@@ -1,8 +1,18 @@
 <template>
   <div class='quantity'>
-    <button type='button' class='quantity-btn-minus' @click='minus'>-</button>
+    <button
+      type='button'
+      class='quantity-btn-minus'
+      :class='{"quantity-btn-cart":cart}'
+      @click='minus'
+    >-</button>
     <input type='text' class='quantity-input' v-model='num' @input='checkValid($event)'>
-    <button type='button' class='quantity-btn-plus' @click='plus'>+</button>
+    <button
+      type='button'
+      class='quantity-btn-plus'
+      :class='{"quantity-btn-cart":cart}'
+      @click='plus'
+    >+</button>
   </div>
 </template>
 
@@ -20,6 +30,10 @@ export default {
       default: function() {
         return {};
       }
+    },
+    cart: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
@@ -61,6 +75,16 @@ export default {
       this.$store.dispatch("updateCartCount", this.goods);
     }
   },
+  watch: {
+    num(val) {
+      if (val != this.goods.count) {
+        this.num = this.goods.count;
+      }
+    },
+    "goods.count"(val) {
+      this.num = val;
+    }
+  }
 };
 </script>
 
@@ -111,6 +135,11 @@ export default {
   border-bottom-right-radius: 10px;
   border-left: 1px solid #ddd;
   right: 0;
+}
+.quantity-btn-cart {
+  border-radius: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
 }
 </style>
 

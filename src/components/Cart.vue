@@ -12,8 +12,8 @@
     <div class='cart-body'>
       <div class='cart-body-item' v-for='(item,index) in goods' :key='index'>
         <div class='cart-body-item-name one-line-dot'>{{item.name}}</div>
-        <Quantity :goods="item"></Quantity>
-        <div class='cart-body-item-price'>&yen;{{item.price}}</div>
+        <Quantity cart :goods='item'></Quantity>
+        <div class='cart-body-item-price'>&yen;{{item.price*item.count}}</div>
       </div>
     </div>
     <div class='cart-foot'>
@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     clearCart() {
+      this.$store.dispatch("clearGoodsCount");
       this.$store.dispatch("clearCartCount");
     }
   },
