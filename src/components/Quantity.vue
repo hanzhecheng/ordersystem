@@ -7,9 +7,14 @@
       @click='minus'
     >-</button>
     <input type='text' class='quantity-input' v-model='num' @input='checkValid($event)'>
-    <button type='button' class='quantity-btn-plus' :class='{"quantity-btn-cart":cart}'>+</button>
+    <button
+      type='button'
+      class='quantity-btn-plus'
+      :class='{"quantity-btn-cart":cart}'
+      @click='plus'
+    >+</button>
 
-    <div class='goodsdot' @click='startAnimation($event)'>
+    <div class='goodsdot' @click='startAnimation($event)' v-if='!cart'>
       <div
         :class='[className,"goodsdot-outer-item","goodsdot-outer-none"]'
         v-for='item in list'
@@ -51,7 +56,7 @@ export default {
       ]
     };
   },
-  components: { },
+  components: {},
   props: {
     goods: {
       type: Object,
@@ -105,23 +110,25 @@ export default {
     startAnimation(event) {
       //购物车动画
       this.plus();
-      let outter = document.querySelectorAll(
-        `.${this.className}.goodsdot-outer-none`
-      )[0];
-      let inner = outter.firstElementChild;
-      outter.classList.remove("goodsdot-outer-none");
-      setTimeout(function() {
-        let transformY = window.innerHeight - event.clientY,
-          transformX = window.innerWidth * 0.8 - event.clientX;
-        inner.style.transform = `translate3d(${transformX}px,0,0)`;
-        outter.style.transform = `translate3d(0,${transformY}px,0)`;
-
+      if (!this.cart) {
+        let outter = document.querySelectorAll(
+          `.${this.className}.goodsdot-outer-none`
+        )[0];
+        let inner = outter.firstElementChild;
+        outter.classList.remove("goodsdot-outer-none");
         setTimeout(function() {
-          outter.classList.add("goodsdot-outer-none");
-          outter.removeAttribute("style");
-          inner.removeAttribute("style");
-        }, 1000);
-      }, 0);
+          let transformY = window.innerHeight - event.clientY,
+            transformX = window.innerWidth * 0.8 - event.clientX;
+          inner.style.transform = `translate3d(${transformX}px,0,0)`;
+          outter.style.transform = `translate3d(0,${transformY}px,0)`;
+
+          setTimeout(function() {
+            outter.classList.add("goodsdot-outer-none");
+            outter.removeAttribute("style");
+            inner.removeAttribute("style");
+          }, 1000);
+        }, 0);
+      }
     }
   },
   computed: {
