@@ -18,8 +18,12 @@
     </div>
     <div class='cart-foot'>
       <div class='cart-foot-left'>
-        <svg-icon icon-class='cc-cart' class='cart-foot-left-icon'></svg-icon>
-        <label>&yen;{{totalAmoount}}</label>
+        <div class='cart-foot-left-count'>
+          <svg-icon icon-class='cc-cart' class='cart-foot-left-icon'></svg-icon>
+          <span class='cart-foot-left-number'>{{totalCount}}</span>
+        </div>
+
+        <label>&yen;{{totalAmount}}</label>
         <label>配送费:&yen;3</label>
       </div>
       <div v-if='goods.length>0' class='cart-foot-right cart-foot-right-full'>去结算 ></div>
@@ -50,9 +54,15 @@ export default {
     }
   },
   computed: {
-    totalAmoount() {
+    totalAmount() {
       return this.goods.reduce((origin, item) => {
         origin += item.count * item.price;
+        return origin;
+      }, 0);
+    },
+    totalCount() {
+      return this.goods.reduce((origin, item) => {
+        origin += item.count - 0;
         return origin;
       }, 0);
     }
@@ -120,7 +130,7 @@ export default {
     font-size: 25px;
     font-weight: 700;
     line-height: 40px;
-    width: 56%;
+    width: 53%;
     text-align: center;
   }
   & > label:last-of-type {
@@ -138,6 +148,7 @@ export default {
     color: white;
     box-sizing: border-box;
     padding-left: 5px;
+    width: 23px;
   }
 }
 .cart-foot-right {
@@ -153,5 +164,20 @@ export default {
 .cart-foot-right-empty {
   background-color: #e4e4e4;
   color: black;
+}
+.cart-foot-left-count {
+  position: relative;
+}
+.cart-foot-left-number {
+  position: absolute;
+  height: 15px;
+  min-width: 20px;
+  border-radius: 10px;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
 }
 </style>
