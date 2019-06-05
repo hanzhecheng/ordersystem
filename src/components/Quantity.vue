@@ -212,7 +212,7 @@ export default {
 .goodsdot-outer-item {
   position: absolute;
   z-index: 2;
-  transition: all 1s cubic-bezier(0.39, -0.4, 0.83, 0.23);
+  transition: all 1s cubic-bezier(0.4, -0.6, 0.83, 0.14);
 }
 .goodsdot-outer-none {
   display: none;
