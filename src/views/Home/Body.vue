@@ -9,6 +9,7 @@
     <div class='body-cart'>
       <Cart :goods='cartList'></Cart>
     </div>
+    <Category :show.sync='show'></Category>
   </div>
 </template>
 
@@ -16,16 +17,24 @@
 const Goods = () => import("@/components/Goods");
 const Notice = () => import("@/components/Notice");
 const Cart = () => import("@/components/Cart");
+const Category = () => import("@/components/Category");
+import throttle from "@/assets/js/throttle";
 export default {
   name: "Body",
+  data() {
+    return {
+      show: false
+    };
+  },
   components: {
     Goods,
     Notice,
-    Cart
+    Cart,
+    Category
   },
   mounted() {
     let arr = [];
-    Array(5)
+    Array(50)
       .fill(1)
       .forEach((item, index) => {
         arr.push({
@@ -34,7 +43,7 @@ export default {
           subtitle: "大家喜欢才是真的好",
           name: "招牌冻丝袜奶茶" + index,
           desc: "让你一秒感受冰爽提神！主要原料：奶茶",
-          score: "5" - index,
+          score: parseInt(Math.random() * 5 + 1, 10),
           price: "14" - index,
           salesNo: "63" - index,
           count: 0,
@@ -43,6 +52,21 @@ export default {
         });
       });
     this.$store.dispatch("initGoodsList", arr);
+    window.addEventListener("scroll", throttle(this.showCategory, 50));
+  },
+  methods: {
+    showCategory() {
+      let goods = document.getElementsByClassName("body-goodslist")[0];
+      if (goods.getBoundingClientRect().top < 10) {
+        if (!this.show) {
+          this.show = true;
+        }
+      } else {
+        if (this.show) {
+          this.show = false;
+        }
+      }
+    }
   },
   computed: {
     goodsList() {
