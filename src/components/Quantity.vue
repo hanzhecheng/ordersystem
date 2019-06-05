@@ -7,27 +7,51 @@
       @click='minus'
     >-</button>
     <input type='text' class='quantity-input' v-model='num' @input='checkValid($event)'>
-    <button
-      type='button'
-      class='quantity-btn-plus'
-      :class='{"quantity-btn-cart":cart}'
-      @click='plus($event)'
-    >+</button>
-    <GoodsDot :client="client" ref="goodsdot"></GoodsDot>
+    <button type='button' class='quantity-btn-plus' :class='{"quantity-btn-cart":cart}'>+</button>
+
+    <div class='goodsdot' @click='startAnimation($event)'>
+      <div
+        :class='[className,"goodsdot-outer-item","goodsdot-outer-none"]'
+        v-for='item in list'
+        :key='item'
+      >
+        <div class='goodsdot-inner'></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-const GoodsDot = () => import("@/components/GoodsDot");
 export default {
   name: "Quantity",
   data() {
     return {
       num: 1,
-      client: { x: "", y: "" }
+      list: [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
     };
   },
-  components: { GoodsDot },
+  components: { },
   props: {
     goods: {
       type: Object,
@@ -64,7 +88,7 @@ export default {
       }
       this.updateCount();
     },
-    plus(event) {
+    plus() {
       if (this.num === "") {
         this.num = 1;
       } else {
@@ -72,18 +96,37 @@ export default {
         this.num += 1;
       }
       this.updateCount();
-      if (!this.cart) {
-        this.client = {
-          x: event.clientX,
-          y: event.clientY
-        };
-        this.$refs.goodsdot.startAnimation()
-      }
     },
     updateCount() {
       this.goods.count = this.num;
       this.$store.dispatch("updateGoodsCount", this.goods);
       this.$store.dispatch("updateCartCount", this.goods);
+    },
+    startAnimation(event) {
+      //购物车动画
+      this.plus();
+      let outter = document.querySelectorAll(
+        `.${this.className}.goodsdot-outer-none`
+      )[0];
+      let inner = outter.firstElementChild;
+      outter.classList.remove("goodsdot-outer-none");
+      setTimeout(function() {
+        let transformY = window.innerHeight - event.clientY,
+          transformX = window.innerWidth * 0.8 - event.clientX;
+        inner.style.transform = `translate3d(${transformX}px,0,0)`;
+        outter.style.transform = `translate3d(0,${transformY}px,0)`;
+
+        setTimeout(function() {
+          outter.classList.add("goodsdot-outer-none");
+          outter.removeAttribute("style");
+          inner.removeAttribute("style");
+        }, 1000);
+      }, 0);
+    }
+  },
+  computed: {
+    className() {
+      return "goodsdot-outer" + this.goods.id;
     }
   },
   watch: {
@@ -151,6 +194,28 @@ export default {
   border-radius: 0;
   background-color: #fff;
   border: 1px solid #ddd;
+}
+
+.goodsdot {
+  position: absolute;
+  width: 25px;
+  height: 20px;
+  right: 0;
+}
+.goodsdot-outer-item {
+  position: absolute;
+  z-index: 2;
+  transition: all 1s cubic-bezier(0.39, -0.4, 0.83, 0.23);
+}
+.goodsdot-outer-none {
+  display: none;
+}
+.goodsdot-inner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #0089dc;
+  transition: all 1s ease;
 }
 </style>
 
