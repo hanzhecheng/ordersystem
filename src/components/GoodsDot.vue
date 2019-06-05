@@ -11,6 +11,7 @@
 </template>
 
 <script>
+//暂时不用，在Quantity组件中直接用
 export default {
   name: "GoodsDot",
   data() {
