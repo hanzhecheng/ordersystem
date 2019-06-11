@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <meta
+        http-equiv="X-UA-Compatible"
+        content="ie=edge"
+    >
+    <title>intersectionObserver</title>
+    <style>
+        .inter {
+            width: 400px;
+            height: 600px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            overflow-y: auto;
+        }
+
+        .item {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #eee;
+            margin: 800px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="inter">
+        <div class="item"></div>
+    </div>
+    <script>
+        let oberve = new IntersectionObserver(function (entries) {
+            entries.forEach(i => {
+                if (i.intersectionRatio < 0.85) {
+                    return
+                }
+
+                console.log(i.intersectionRatio)
+                console.log(132)
+            })
+        }, {
+            root: document.getElementsByClassName("inter")[0],
+            threshold:[0.8]
+        }).observe(document.getElementsByClassName("item")[0])
+
+       
+    </script>
+</body>
+
+</html>
