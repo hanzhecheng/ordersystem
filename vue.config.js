@@ -1,9 +1,6 @@
 const CompressionWebpackPlugin = require("compression-webpack-plugin")
 const productionGzipExtensions = ['js', 'css']
 module.exports = {
-    build: {
-        productionSourceMap: false
-    },
     chainWebpack: config => {
         //配置svg使用方式
         const svgRule = config.module.rule('svg')
