@@ -1,13 +1,22 @@
 const goods = {
     state: {
-        goodsList: []
+        goodsList: [],
+        isScrolling: false
     },
     mutations: {
         UPDATE_GOODS_LIST(state, list) {
             state.goodsList = list
+        },
+        SET_GOODS_ISSCROLLING(state, isScrolling) {
+            state.isScrolling = isScrolling
         }
     },
     actions: {
+        updateScroll({
+            commit
+        }, isScrolling) {
+            commit("SET_GOODS_ISSCROLLING", isScrolling)
+        },
         initGoodsList({
             commit
         }, list) {
