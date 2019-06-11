@@ -1,7 +1,13 @@
 <template>
   <div class='body'>
     <div class='body-goodslist'>
-      <Goods v-for='item in goodsList' :info='item' :key='item.id'></Goods>
+      <template v-for='(item,index) in goodsList'>
+        <div class='body-goodslist-link' v-if='index%6==0' :id='"body-goodslist-link"+item.id'>
+          <h3>{{item.name.substring(0,3)}}</h3>
+          <span>{{item.desc}}</span>
+        </div>
+        <Goods :info='item'></Goods>
+      </template>
     </div>
     <div class='body-notice'>
       <Notice></Notice>
@@ -9,7 +15,7 @@
     <div class='body-cart'>
       <Cart :goods='cartList'></Cart>
     </div>
-    <Category :show.sync='show'></Category>
+    <Category ref='myCategory' :show.sync='show'></Category>
   </div>
 </template>
 
@@ -53,6 +59,9 @@ export default {
       });
     this.$store.dispatch("initGoodsList", arr);
     window.addEventListener("scroll", throttle(this.showCategory, 50));
+    setTimeout(() => {
+      this.initScroll();
+    }, 500);
   },
   methods: {
     showCategory() {
@@ -66,6 +75,23 @@ export default {
           this.show = false;
         }
       }
+    },
+    initScroll() {
+      window.addEventListener("scroll", throttle(this.categoryScroll, 100));
+    },
+    categoryScroll() {
+      if(this.$store.getters.isScrolling) return
+      let links = document.querySelectorAll(".body-goodslist-link");
+      links.forEach(item => {
+        let link = document.getElementById(item.id);
+        let top = link.getBoundingClientRect().top;
+        if (top > 10 && top < 100) {
+          let index = this.$refs.myCategory.list.findIndex(
+            it => it.href == item.id.replace("body-goodslist-link", "")
+          );
+          this.$refs.myCategory.scrollTo(index);
+        }
+      });
     }
   },
   computed: {
@@ -102,6 +128,20 @@ export default {
   position: fixed;
   right: 0;
   bottom: 0;
+}
+.body-goodslist-link {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  margin-left: 10px;
+  h3 {
+    margin: 0;
+  }
+  span {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #999;
+  }
 }
 </style>
 
