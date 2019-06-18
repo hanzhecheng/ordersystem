@@ -114,16 +114,27 @@ export default {
   width: 33%;
   position: relative;
   cursor: pointer;
-  &:not(:last-child)::after {
+ 
+  &::after {
     content: "";
+    width: 0;
+    height: 2px;
+    background-color: #0089dc;
     position: absolute;
-    right: 0;
-    height: 14px;
-    width: 1px;
-    background-color: #ccc;
+    left: 100%;
+    bottom: 0;
+    transition: all 0.4s;
   }
   &.active {
-    border-bottom: 2px solid #0089dc;
+    color: #0089dc;
+    &::after {
+      width: 100%;
+      left: 0;
+      transition-delay: 0.1s;
+    }
+    & ~ .operator-list-item::after {
+      left: 0;
+    }
   }
 }
 .operator-sort {

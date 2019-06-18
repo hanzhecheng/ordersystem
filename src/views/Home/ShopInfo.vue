@@ -1,12 +1,15 @@
 <template>
   <div class='shopinfo'>
-    <div class='shopinfo-left'>
+    <div class='shopinfo-left' @mouseenter="showMoreInfo" @mouseleave="hideMoreInfo">
       <img class='shopinfo-avatar' :src='shopInfo.image'>
       <div class='shopinfo-main'>
         <div class='shopinfo-name one-line-dot'>{{shopInfo.name}}</div>
         <div class='shooinfo-star'>
           <Stars :number='5'></Stars>
         </div>
+      </div>
+      <div class="shopinfo-left-more">
+
       </div>
     </div>
     <div class='shopinfo-right'>
@@ -51,6 +54,12 @@ export default {
     };
   },
   methods: {
+    showMoreInfo(){
+
+    },
+    hideMoreInfo(){
+
+    },
     toggleLove() {
       this.shopInfo.love = !this.shopInfo.love;
     }
@@ -70,6 +79,7 @@ export default {
 .shopinfo-left {
   display: flex;
   width: 30vw;
+  flex-wrap: wrap;
   @include center;
 }
 
@@ -138,6 +148,9 @@ export default {
   font-size: 13px;
   display: inline-block;
   margin-top: -10px;
+}
+.shopinfo-left-more{
+  width: 100%;
 }
 </style>
 
