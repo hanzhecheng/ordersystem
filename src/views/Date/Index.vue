@@ -41,8 +41,23 @@ export default {
       notCurrentFlag: false //是否点了上一个月或下一个月
     };
   },
+  model: {
+    prop: "date",
+    event: "dateChange"
+  },
+  props: {
+    date: {
+      type: [String],
+      default: new Date().toLocaleDateString()
+    }
+  },
   mounted() {
-    this.initDays(new Date());
+    if (!this.date) {
+      this.$emit("dateChange", new Date().toLocaleDateString());
+      this.initDays(new Date());
+    } else {
+      this.initDays(this.date);
+    }
   },
   methods: {
     setMonth(type = "current") {
@@ -191,6 +206,7 @@ export default {
         }
       });
     },
+    //设置选中的日期
     setSelected(day) {
       let today = day,
         flag = false,
@@ -239,6 +255,11 @@ export default {
   computed: {
     now() {
       return this.currentDate.toLocaleDateString();
+    }
+  },
+  watch: {
+    currentDate(val) {
+      this.$emit("dateChange", val.toLocaleDateString());
     }
   }
 };

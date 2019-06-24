@@ -12,7 +12,7 @@ export default new Router({
         {
             path: "/table",
             name: "table",
-            component: _import("Date/Index")
+            component: _import("Test/Index")
         }
     ]
 });
