@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='test'>
     <h2>{{date}}</h2>
     <DatePicker v-model='date'></DatePicker>
   </div>
@@ -18,5 +18,12 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.test {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 </style>
+
