@@ -1,16 +1,11 @@
 <template>
   <div class='hb_Date_Table'>
-    <!-- <el-button-group>
-      <el-button @click='setMonth("last")'>上个月</el-button>
-      <el-button @click='setMonth("current")'>今天</el-button>
-      <el-button @click='setMonth("next")'>下个月</el-button>
-    </el-button-group>-->
     <ul class='header'>
       <li @click='setMonth("last")'>上个月</li>
       <li @click='setMonth("current")'>今天</li>
       <li @click='setMonth("next")'>下个月</li>
     </ul>
-    <div>{{currentDate.toLocaleDateString()}}</div>
+    <div>{{now}}</div>
     <table class='dateTable'>
       <thead>
         <th>一</th>
@@ -81,12 +76,15 @@ export default {
     },
     //设置选中
     setCurrent(rowIndex, columnIndex) {
-      let value = this.days[rowIndex][columnIndex];
+      let value = this.days[rowIndex][columnIndex],
+        date = this.currentDate;
       if (rowIndex == 0 && value > 7) {
         //点击了上个月
         this.setMonth("last");
         this.$nextTick(() => {
           this.setSelected(value);
+          date = new Date(date.getFullYear(), date.getMonth() - 1, value);
+          this.currentDate = date;
         });
         return;
       }
@@ -95,9 +93,13 @@ export default {
         this.setMonth("next");
         this.$nextTick(() => {
           this.setSelected(value);
+          date = new Date(date.getFullYear(), date.getMonth() + 1, value);
+          this.currentDate = date;
         });
         return;
       }
+      date = new Date(date.getFullYear(), date.getMonth(), value);
+      this.currentDate = date;
       this.currentIndex = rowIndex + "" + columnIndex;
     },
     //初始化日期
@@ -232,6 +234,11 @@ export default {
       }
       let days = new Date(currentYear, month, 0).getDate();
       return days;
+    }
+  },
+  computed: {
+    now() {
+      return this.currentDate.toLocaleDateString();
     }
   }
 };
