@@ -11,7 +11,7 @@ export default {
   name: "Test",
   data() {
     return {
-      date: ""
+      date: "2019/5/15"
     };
   },
   components: { DatePicker }

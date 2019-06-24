@@ -56,7 +56,8 @@ export default {
       this.$emit("dateChange", new Date().toLocaleDateString());
       this.initDays(new Date());
     } else {
-      this.initDays(this.date);
+      this.currentDate = new Date(this.date);
+      this.initDays(this.currentDate);
     }
   },
   methods: {
@@ -202,7 +203,7 @@ export default {
           let index = this.days[0].findIndex(item => item == 1);
           this.currentIndex = 0 + "" + index;
         } else {
-          this.setSelected(new Date().getDate());
+          this.setSelected(this.currentDate.getDate());
         }
       });
     },
